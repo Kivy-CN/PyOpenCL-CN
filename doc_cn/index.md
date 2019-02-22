@@ -2,24 +2,17 @@
 ====================================
 
 [原文地址](https://documen.tician.de/pyopencl/index.html)
+翻译:[CycleUser](https://github.com/cycleuser)
 _________________________
 
-PyOpenCL gives you easy, Pythonic access to the
-[OpenCL](http://www.khronos.org/opencl/) parallel computation API. What
-makes PyOpenCL special?
+PyOpenCL 让你可以以Pythonic风格,简单地使用[OpenCL](http://www.khronos.org/opencl/) 的并行计算接口(parallel computation API).它具有如下的特点:
 
--   Object cleanup tied to lifetime of objects. This idiom, often called
-    [RAII](http://en.wikipedia.org/wiki/Resource_Acquisition_Is_Initialization)
-    in C++, makes it much easier to write correct, leak- and crash-free
-    code.
--   Completeness. PyOpenCL puts the full power of OpenCL's API at your
-    disposal, if you wish. Every obscure get\_info() query and all CL
-    calls are accessible.
--   Automatic Error Checking. All errors are automatically translated
-    into Python exceptions.
--   Speed. PyOpenCL's base layer is written in C++, so all the niceties
-    above are virtually free.
--   Helpful Documentation. You're looking at it. ;)
+-   与对象生命周期(ifetime of objects)绑定的对象清理(Object cleanup). 在C++中这个术语(idiom)也叫做
+    [RAII](http://en.wikipedia.org/wiki/Resource_Acquisition_Is_Initialization)(中文直译为"资源获取即初始化",具体来说是在构造函数中申请资源，析构函数中释放资源).这样有利于写正确代码,避免代码出现泄漏或者崩溃.
+-   完备性(Completeness). PyOpenCL 为开发人员提供了全部的 OpenCL API 支持. 所有的`get_info()` 查询(query)以及所有的`CL`调用(calls)都是可用的(accessible).
+-   自动错误检查.所有的错误都会自动翻译成 Python 异常(exceptions).
+-   速度. PyOpenCL 的底层是用 C++ 写的, 所以速度非常快.
+-   有帮助的文档Helpful Documentation. You're looking at it. ;)
 -   Liberal license. PyOpenCL is open-source under the
     MIT license \<license\> and free for commercial, academic, and
     private use.
