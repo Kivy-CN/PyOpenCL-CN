@@ -1,10 +1,8 @@
 **Easy OpenCL with Python**
 
-**原文地址:**
-<http://www.drdobbs.com/open-source/easy-opencl-with-python/240162614>
+本文为[Gastón Hillar 在 drdobbs 上发表的帖文](http://www.drdobbs.com/open-source/easy-opencl-with-python/240162614)
 
-By [Gastón Hillar](http://www.drdobbs.com/authors/Gaston-Hillar) and Gaston
-Hillar, October 15, 2013
+原文作者 [Gastón Hillar](http://www.drdobbs.com/authors/Gaston-Hillar) 发表于 October 15, 2013
 
 **Post a Comment**
 
