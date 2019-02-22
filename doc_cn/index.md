@@ -1,5 +1,8 @@
-Welcome to PyOpenCL's documentation!
+欢迎来到 PyOpenCL 中文文档
 ====================================
+
+[原文地址](https://documen.tician.de/pyopencl/index.html)
+_________________________
 
 PyOpenCL gives you easy, Pythonic access to the
 [OpenCL](http://www.khronos.org/opencl/) parallel computation API. What
