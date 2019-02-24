@@ -1,9 +1,11 @@
 欢迎来到 PyOpenCL 中文文档
 ====================================
 
-[原文地址](https://documen.tician.de/pyopencl/index.html)
-翻译:[CycleUser](https://github.com/cycleuser)
-_________________________
+#### 原作者: Andreas Kloeckner <inform@tiker.net>
+#### [原文地址](https://documen.tician.de/pyopencl/index.html)
+#### 翻译:[CycleUser](https://github.com/cycleuser)
+
+___________________________________
 
 PyOpenCL 让你可以以Pythonic风格,简单地使用[OpenCL](http://www.khronos.org/opencl/) 的并行计算接口(parallel computation API).它具有如下的特点:
 

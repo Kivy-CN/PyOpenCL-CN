@@ -1,2 +1,0 @@
-OpenCL Runtime: Constants
-=========================
