@@ -96,41 +96,42 @@ pyopencl._cl.Platform
 
 ##### 注意
 
-在最近的一些支持 OpenCL ICD 的 CL 驱动中，不加参数使用构造函数（constructor）可能会失败。如果想要最简单的开箱即用的上下文创建行为，推荐函数 `create_some_context`。例如可以参考这份
+在最近的一些支持 OpenCL 可安装客户端驱动 (Installable Client Drivers 缩写为 ICD)的 CL 驱动中，不加参数使用构造函数（constructor）可能会失败。如果想要最简单的开箱即用的上下文创建行为，推荐函数 `create_some_context`。例如可以参考这份
 [`来自AMD的官方解释`](http://developer.amd.com/support/KnowledgeBase/Lists/KnowledgeBase/DispForm.aspx?ID=71).
 
 ##### 注意
 
-Because of how OpenCL changed in order to support Installable Client
-Drivers (ICDs) in OpenCL 1.1, the following will `look` reasonable
-but often actually not work::
+在 OpenCL 1.1 版本以及以后的版本中，由于加入了 可安装客户端驱动  (Installable Client Drivers 缩写为 ICD)的支持而进行了调整，下面的代码`看上去`很合理没啥问题但经常不能工作：
 
+```Python
     import pyopencl as cl
     ctx = cl.Context(dev_type=cl.device_type.ALL)
+```
 
-Instead, make sure to choose a platform when choosing a device by type::
+解决方案就是在通过类型选择设备（device）的时候选择一个平台（platform）：
 
+```Python
     import pyopencl as cl
 
     platforms = cl.get_platforms()
     ctx = cl.Context(
             dev_type=cl.device_type.ALL,
             properties=[(cl.context_properties.PLATFORM, platforms[0])])
+```
 
 ##### 注意
 
-For
-:attr:`context_properties.CL_GL_CONTEXT_KHR`,
-:attr:`context_properties.CL_EGL_DISPLAY_KHR`,
-:attr:`context_properties.CL_GLX_DISPLAY_KHR`,
-:attr:`context_properties.CL_WGL_HDC_KHR`, and
-:attr:`context_properties.CL_CGL_SHAREGROUP_KHR`
-:attr:`context_properties.CL_CGL_SHAREGROUP_APPLE`
-the value in the key-value pair is a PyOpenGL context or display
-instance.
+对于
+**属性（attribute）**`context_properties.CL_GL_CONTEXT_KHR`,
+**属性（attribute）**`context_properties.CL_EGL_DISPLAY_KHR`,
+**属性（attribute）**`context_properties.CL_GLX_DISPLAY_KHR`,
+**属性（attribute）**`context_properties.CL_WGL_HDC_KHR`, 以及
+**属性（attribute）**`context_properties.CL_CGL_SHAREGROUP_KHR`
+**属性（attribute）**`context_properties.CL_CGL_SHAREGROUP_APPLE`
+键值对（key-value pair）中的值是一个 PyOpenGL 上下文环境（context）或者是显示实例（display instance）。
 
-.. versionchanged:: 0.91.2
-Constructor arguments `dev_type` added.
+**此修改发生于版本** 0.91.2
+构造函数增加了参数 `dev_type` 。
 
 ##### info
 
