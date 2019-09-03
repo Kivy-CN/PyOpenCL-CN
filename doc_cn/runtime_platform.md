@@ -135,26 +135,34 @@ pyopencl._cl.Platform
 
 ##### info
 
-Lower case versions of the `context_info` constants
-may be used as attributes on instances of this class
-to directly query info attributes.
+常量 `context_info` 的小写版本，可以用作该类（class）实例（instances）的实例（instances）的属性（attributes），可以直接查询 'info' 属性。
 
 ##### get_info(param)
 
-See `context_info` for values of `param`.
+查看 `context_info`  得到 `param` 的值。
 
 .. automethod:: from_int_ptr
 .. autoattribute:: int_ptr
 
-|comparable|
+##### static from_int_ptr(int_ptr_value: int, retain: bool = True) → pyopencl._cl.Context
+
+静态方法(static method)，返回一个新的 Python 对象，该对象指向 C 语言层次的 CL 上下文对象（C-level cl_context object），其地址由`int_ptr_value`所指向。
+如果设置保留参数（retain）为真（True），则会调用相关的函数 clRetain*()。如果该对象的前一个所有者不释放该引用，保留参数（retain）应该设置为假（False），以便将所有权有效率地转移到 pyopencl。
+
+于版本 2013.2 中新增该项。
+
+于版本 2016.1 中作出修改：增加 保留 *retain* 选项。
+
+##### int_ptr
+
+返回 CL 上下文(cl_context)的地址指针为一个整数（integer）。使用 `from_int_ptr()` 将其转换成一个 Python 对象。
+
+于版本 2013.2 中新增该项。
+
+这个类（classs）的实例（instance）是散列的（hashable），两个该类实例的对比要使用双等号 “==” 以及叹号加等号 “!=”。（可散列性（hashability）是在2011.2版本中开始添加的。）如果两个地址所指向的是同样的 OpenCL 对象，就认为这两个对象相等，这一点和 C 语言里面的指针是等价的。
 
 #### pyopencl.create_some_context(interactive=True, answers=None, cache_dir=None)
 
-Create a `Context` 'somehow'.
+创建一个上下文环境 （`Context`）。
 
-If multiple choices for platform and/or device exist, `interactive`
-is True, and `sys.stdin.isatty()` is also True,
-then the user is queried about which device should be chosen.
-Otherwise, a device is chosen in an implementation-defined manner.
-
-
+如果平台或者设备都存在多个选择，`interactive`为真（True），另外`sys.stdin.isatty()` 也为真（True），然后程序会询问用户要选择哪个设备来使用。否则的话就会根据内部定义的规则（implementation-defined manner）来选择一个设备(device)。
