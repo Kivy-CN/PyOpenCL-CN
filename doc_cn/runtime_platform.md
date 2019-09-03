@@ -54,62 +54,52 @@ pyopencl._cl.Platform
 
 ##### info
 
-Lower case versions of the `device_info` constants
-may be used as attributes on instances of this class
-to directly query info attributes.
+常量 `device_info` 的小写版本，可以用作该类（class）实例（instances）的实例（instances）的属性（attributes），可以直接查询 'info' 属性。
+
 
 ##### get_info(param)
 
-See `device_info` for values of `param`.
+查看 `device_info` 得到 `param` 的值。
 
 .. automethod:: from_int_ptr
 .. autoattribute:: int_ptr
 
 ##### create_sub_devices(properties)
 
-`properties` is an array of one (or more) of the forms::
+`properties` 是一个数组（array），数组元素可以是下面的一种或者多种:
 
     [ dpp.EQUALLY, 8]
     [ dpp.BY_COUNTS, 5, 7, 9, dpp.PARTITION_BY_COUNTS_LIST_END]
     [ dpp.BY_NAMES, 5, 7, 9, dpp.PARTITION_BY_NAMES_LIST_END]
     [ dpp.BY_AFFINITY_DOMAIN, dad.L1_CACHE]
 
-where `dpp` represents `device_partition_property`
-and `dad` represent `device_affinity_domain`.
+其中的 `dpp` 是 `device_partition_property` 的缩写，直接翻译就是`设备分区性质`
+而 `dad` 是 `device_affinity_domain`的缩写，直接翻译就是`设备关系域`
 
-`PROPERTIES_LIST_END_EXT` is added automatically.
+`PROPERTIES_LIST_END_EXT` 是自动添加的。
 
-Only available with CL 1.2.
+在 CL 1.2 以及更新的版本才支持。
 
 .. versionadded:: 2011.2
 
-Two instances of this class may be compared using `=="` and `"!="`.
+这个类（class）的两个实例（instances）之间的比较要使用 `=="` and `"!="`.
 
 上下文(Context)
 -------
 
 #### class pyopencl.Context(devices=None, properties=None, dev_type=None, cache_dir=None)
 
-Create a new context. `properties` is a list of key-value
-tuples, where each key must be one of `context_properties`.
-At most one of `devices` and `dev_type` may be not `None`, where
-`devices` is a list of `Device` instances, and
-`dev_type` is one of the `device_type` constants.
-If neither is specified, a context with a `dev_type` of
-:attr:`device_type.DEFAULT` is created.
+创建一个新的上下文（context），其属性`properties`是一个键值对元组（key-value tuples）的列表（list），其中每个键（key）必须是上下文属性 `context_properties`之一。至少设备`devices`和设备类型`dev_type`都不能是空`None`，这里的设备`devices`是一个由设备实例（`Device` instances）组成的列表，而`dev_type`是设备类型`device_type`实例中的一个。
 
-If `cache_dir` is not `None` - it will be used as default `cache_dir`
-for all its' `Program` instances builds (see also :meth:`Program.build`).
+如果啥都没指定，就会创建一个`dev_type`为默认属性`device_type.DEFAULT`的上下文。
+如果缓存目录`cache_dir`非空（不是`None`），就会对所有的`Program`实例使用默认的缓存目录`cache_dir`（这部分还可以参考关于`Program.build`方法的文档）。
 
-.. note::
+##### 注意
 
-Calling the constructor with no arguments will fail for recent
-CL drivers that support the OpenCL ICD. If you want similar,
-just-give-me-a-context-already behavior, we recommend
-:func:`create_some_context`. See, e.g. this
-`explanation by AMD <http://developer.amd.com/support/KnowledgeBase/Lists/KnowledgeBase/DispForm.aspx?ID=71>`_.
+在最近的一些支持 OpenCL ICD 的 CL 驱动中，不加参数使用构造函数（constructor）可能会失败。如果想要最简单的开箱即用的上下文创建行为，推荐函数 `create_some_context`。例如可以参考这份
+[`来自AMD的官方解释`](http://developer.amd.com/support/KnowledgeBase/Lists/KnowledgeBase/DispForm.aspx?ID=71).
 
-.. note::
+##### 注意
 
 Because of how OpenCL changed in order to support Installable Client
 Drivers (ICDs) in OpenCL 1.1, the following will `look` reasonable
@@ -127,7 +117,7 @@ Instead, make sure to choose a platform when choosing a device by type::
             dev_type=cl.device_type.ALL,
             properties=[(cl.context_properties.PLATFORM, platforms[0])])
 
-.. note::
+##### 注意
 
 For
 :attr:`context_properties.CL_GL_CONTEXT_KHR`,
