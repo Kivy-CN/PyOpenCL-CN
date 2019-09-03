@@ -80,7 +80,7 @@ pyopencl._cl.Platform
 
 在 CL 1.2 以及更新的版本才支持。
 
-.. versionadded:: 2011.2
+添加于版本 2011.2
 
 这个类（class）的两个实例（instances）之间的比较要使用 `=="` and `"!="`.
 
@@ -122,12 +122,12 @@ pyopencl._cl.Platform
 ##### 注意
 
 对于
-**属性（attribute）**`context_properties.CL_GL_CONTEXT_KHR`,
-**属性（attribute）**`context_properties.CL_EGL_DISPLAY_KHR`,
-**属性（attribute）**`context_properties.CL_GLX_DISPLAY_KHR`,
-**属性（attribute）**`context_properties.CL_WGL_HDC_KHR`, 以及
-**属性（attribute）**`context_properties.CL_CGL_SHAREGROUP_KHR`
-**属性（attribute）**`context_properties.CL_CGL_SHAREGROUP_APPLE`
+`context_properties.CL_GL_CONTEXT_KHR`,
+`context_properties.CL_EGL_DISPLAY_KHR`,
+`context_properties.CL_GLX_DISPLAY_KHR`,
+`context_properties.CL_WGL_HDC_KHR`, 以及
+`context_properties.CL_CGL_SHAREGROUP_KHR`
+`context_properties.CL_CGL_SHAREGROUP_APPLE`
 键值对（key-value pair）中的值是一个 PyOpenGL 上下文环境（context）或者是显示实例（display instance）。
 
 **此修改发生于版本** 0.91.2

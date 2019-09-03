@@ -7,166 +7,154 @@ OpenCL Runtime: 命令队列(Command Queue), 事件(Events)
 
 ___________________________________
 
-
 命令队列（Command Queue）
 -------------
 
-.. class:: CommandQueue(context, device=None, properties=None)
+#### class CommandQueue(context, device=None, properties=None)
 
-    Create a new command queue. *properties* is a bit field
-    consisting of :class:`command_queue_properties` values.
+创建一个新的命令队列(command queue)。属性 `properties` 是一个位字段（bit field），包含命令队列属性 `command_queue_properties`的值。
 
-    If *device* is None, one of the devices in *context* is chosen
-    in an implementation-defined manner.
+如果设备`device`为空（None），上下文（`context`）中的设备（devices）之一以实现定义的方式（implementation-defined manner）来选择。
 
-    *properties* may be a bitwise combination of values from
-    :class:`queue_properties` (or *None* which is equivalent to
-    passing *0*). This is compatible with both OpenCL 1.x and 2.x.
+属性 `properties` 可以试试一个位组合（bitwise combination），取值自队列属性`queue_properties` (或者设置为空`None` 也就等价于传递过去一个`0`。) 这一特性在 OpenCL 1.X 和 2.X 中都兼容。
 
-    For OpenCL 2.0 and above, *properties* may also be a sequence
-    of keys and values from :class:`queue_properties` as accepted
-    by :c:func:`clCreateCommandQueueWithProperties` (see the OpenCL
-    spec for details). The trailing *0* is added automatically
-    and does not need to be included.
+对 OpenCL 2.0 以及更新的版本，属性 `properties`也可以是一个键值对（keys and values）的序列（sequence），键值对取值自队列属性 `queue_properties` ，该属性为函数 `clCreateCommandQueueWithProperties`所接收 (具体信息参考 OpenCL 参数文档）。后缀的 `0` 是自动添加的不需要包含。
 
-    A :class:`CommandQueue` may be used as a context manager, like this::
+命令队列 `CommandQueue` 也可以用作一个上下文管理器（context manager），例如：
 
-        with cl.CommandQueue(self.cl_context) as queue:
-            enqueue_stuff(queue, ...)
+```Python
+with cl.CommandQueue(self.cl_context) as queue:
+    enqueue_stuff(queue, ...)
+```
 
-    :meth:`finish` is automatically called at the end of the ``with``-delimited
-    context.
+方法 `finish` 会在带分隔的上下文（with-delimited context）的末尾自动添加。
 
-    .. versionadded:: 2013.1
+添加于版本 2013.1
 
-        Context manager capability.
+实现了上下文管理器的兼容性（Context manager capability）。
 
-    .. versionchanged:: 2018.2
+版本变更于 2018.2
 
-        Added the sequence-of-properties interface for OpenCL 2.
+针对 OpenCL 2 增加了属性队列接口（sequence-of-properties interface)。
 
-    .. attribute:: info
+##### info
 
-        Lower case versions of the :class:`command_queue_info` constants
-        may be used as attributes on instances of this class
-        to directly query info attributes.
+常量 `command_queue_info` 的小写版本，可以用作该类（class）实例（instances）的实例（instances）的属性（attributes），可以直接查询 'info' 属性。
 
-    .. method:: get_info(param)
+##### get_info(param)
 
-        See :class:`command_queue_info` for values of *param*.
+查看 `command_queue_info` 得到 `param` 的值。
 
-    .. method:: set_property(prop, enable)
+##### set_property(prop, enable)
 
-        See :class:`command_queue_properties` for possible values of *prop*.
-        *enable* is a :class:`bool`.
+查看 `command_queue_properties` 来获取 `prop` 可取的值。
+`enable` 是一个布尔值 `bool`.
 
-        Unavailable in OpenCL 1.1 and newer.
+在 OpenCL 1.1 以及更新的版本中就不被支持了。
 
-    .. method:: flush()
-    .. method:: finish()
+##### flush()
+##### finish()
 
-    .. automethod:: from_int_ptr
-    .. autoattribute:: int_ptr
+.. automethod:: from_int_ptr
+.. autoattribute:: int_ptr
 
-    |comparable|
+|comparable|
 
-Event
+事件（Event）
 -----
 
-.. class:: Event
+#### class Event
 
-    .. attribute:: info
+##### info
 
-        Lower case versions of the :class:`event_info` constants
-        may be used as attributes on instances of this class
-        to directly query info attributes.
+常量 `event_info` 的小写版本，可以用作该类（class）实例（instances）的实例（instances）的属性（attributes），可以直接查询 'info' 属性。
 
-    .. attribute:: profile.info
+##### profile.info
 
-        Lower case versions of the :class:`profiling_info` constants
-        may be used as attributes on the attribute `profile` of this
-        class to directly query profiling info.
+常量 `profiling_info` 的小写版本，可以用作该类（class）实例（instances）的实例（instances）的属性（attributes），可以直接查询 'info' 属性。
 
-        For example, you may use *evt.profile.end* instead of
-        *evt.get_profiling_info(pyopencl.profiling_info.END)*.
+例如，你可以使用 `evt.profile.end` 来代替
+`evt.get_profiling_info(pyopencl.profiling_info.END)`。
 
-    .. method:: get_info(param)
+##### get_info(param)
 
-        See :class:`event_info` for values of *param*.
+查看 `event_info` 得到 `param` 的值。
 
-    .. method:: get_profiling_info(param)
+##### get_profiling_info(param)
 
-        See :class:`profiling_info` for values of *param*.
-        See :attr:`profile` for an easier way of obtaining
-        the same information.
+查看 `profiling_info` 得到 `param` 的值。
 
-    .. method:: wait()
+查看 `profile` 以更简单方式获取相关信息。
 
-    .. automethod:: from_int_ptr
-    .. autoattribute:: int_ptr
+##### wait()
 
-    .. method:: set_callback(type, cb)
+.. automethod:: from_int_ptr
+.. autoattribute:: int_ptr
 
-        Add the callback *cb* with signature ``cb(status)`` to the callback
-        queue for the event status *type* (one of the values of
-        :class:`command_execution_status`, except :attr:`command_execution_status.QUEUED`).
+##### set_callback(type, cb)
 
-        See the OpenCL specification for restrictions on what *cb* may and may not do.
+Add the callback `cb` with signature ``cb(status)`` to the callback
+queue for the event status `type` (one of the values of
+`command_execution_status`, except :attr:`command_execution_status.QUEUED`).
 
-        .. versionadded:: 2015.2
 
-    |comparable|
+添加回调 callback `cb` ，附带签名（signature） ``cb(status)`` 来回调针对事件状态（event status）为 `type` 的队列（queue），这里的 `type` 是 命令执行状态`command_execution_status`的一个值，例如 `command_execution_status.QUEUED`。
 
-Event Subclasses
+查询参考 OpenCL 的文档信息来查看参数 `cb` 的效果。
+
+添加于版本 2015.2
+
+|comparable|
+
+事件子类（Event Subclasses）
 ----------------
 
-.. class:: UserEvent(context)
+#### class UserEvent(context)
 
-    A subclass of :class:`Event`. Only available with OpenCL 1.1 and newer.
+事件`Event`的子类。仅在 OpenCL 1.1 以及更新的版本中可用。
 
-    .. versionadded:: 0.92
+添加于版本 0.92
 
-    .. method:: set_status(status)
+##### set_status(status)
 
-        See :class:`command_execution_status` for possible values of *status*.
+查看 `command_execution_status` 获取 `status` 的可选取值。
 
-.. class:: NannyEvent
+#### class NannyEvent
 
-    Transfers between host and device return events of this type. They hold
-    a reference to the host-side buffer and wait for the transfer to complete
-    when they are freed. Therefore, they can safely release the reference to
-    the object they're guarding upon destruction.
+Transfers between host and device return events of this type. They hold
+a reference to the host-side buffer and wait for the transfer to complete
+when they are freed. Therefore, they can safely release the reference to
+the object they're guarding upon destruction.
 
-    A subclass of :class:`Event`.
+事件 `Event` 的子类（subclass）。
 
-    .. versionadded:: 2011.2
+添加于版本 2011.2
 
-    .. method:: get_ward()
+##### get_ward()
 
-    .. method:: wait()
+##### wait()
 
-        In addition to performing the same wait as :meth:`Event.wait()`, this
-        method also releases the reference to the guarded object.
+In addition to performing the same wait as 方法 `Event.wait()`, this
+method also releases the reference to the guarded object.
 
-Synchronization Functions
+同步函数（Synchronization Functions）
 -------------------------
 
-.. function:: wait_for_events(events)
+##### wait_for_events(events)
 
-.. function:: enqueue_barrier(queue, wait_for=None)
+##### enqueue_barrier(queue, wait_for=None)
 
-    Enqueues a barrier operation. which ensures that all queued commands in
-    command_queue have finished execution. This command is a synchronization
-    point.
+Enqueues a barrier operation. which ensures that all queued commands in
+command_queue have finished execution. This command is a synchronization
+point.
 
-    .. versionadded:: 0.91.5
-    .. versionchanged:: 2011.2
-        Takes *wait_for* and returns an :class:`Event`
+添加于版本 0.91.5
+版本变更于 2011.2
+接收 `wait_for` 然后返回一个事件 `Event`
 
-.. function:: enqueue_marker(queue, wait_for=None)
+##### enqueue_marker(queue, wait_for=None)
 
-    Returns an :class:`Event`.
+返回一个 `Event`.
 
-    .. versionchanged:: 2011.2
-        Takes *wait_for*.
-
+版本变更于 2011.2
+接收 `wait_for`.
