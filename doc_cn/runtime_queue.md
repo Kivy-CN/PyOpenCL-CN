@@ -121,10 +121,7 @@ queue for the event status `type` (one of the values of
 
 #### class NannyEvent
 
-Transfers between host and device return events of this type. They hold
-a reference to the host-side buffer and wait for the transfer to complete
-when they are freed. Therefore, they can safely release the reference to
-the object they're guarding upon destruction.
+在宿主和设备之间的数据转换然后就返回这个类型的事件（event）。这类事件持有（hold）一个引用，指向宿主方（host-side）的缓存空间（buffer），然后等待数据转换完毕就释放掉。因此可以用于监控对象的析构（destruction），安全地释放引用。
 
 事件 `Event` 的子类（subclass）。
 
@@ -134,8 +131,7 @@ the object they're guarding upon destruction.
 
 ##### wait()
 
-In addition to performing the same wait as 方法 `Event.wait()`, this
-method also releases the reference to the guarded object.
+除了发挥和`Event.wait()`事件相似的作用，这个方法还会释放掉所监控对象（guarded object）的引用（reference）。
 
 同步函数（Synchronization Functions）
 -------------------------
@@ -144,9 +140,8 @@ method also releases the reference to the guarded object.
 
 ##### enqueue_barrier(queue, wait_for=None)
 
-Enqueues a barrier operation. which ensures that all queued commands in
-command_queue have finished execution. This command is a synchronization
-point.
+提交一个围栏操作（barrier operation）到队列。确保命令队列（command_que）所有队列中的命令都结束之星。这个命令就是一个同步点（synchronization
+point）
 
 添加于版本 0.91.5
 版本变更于 2011.2
