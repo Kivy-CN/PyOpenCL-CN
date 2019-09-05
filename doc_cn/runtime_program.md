@@ -13,11 +13,8 @@ ___________________________________
 #### class Program(context, src)
   Program(context, devices, binaries)
 
-*binaries* must contain one binary for each entry in *devices*.
-If *src* is a `bytes` object starting with a valid `SPIR-V
-<https://www.khronos.org/spir>`_ magic number, it will be handed
-off to the OpenCL implementation as such, rather than as OpenCL C source
-code. (SPIR-V support requires OpenCL 2.1.)
+二进制文件*binaries* 必须包含设备*devices*中的每一项(entry)对应的一个二进制项目*binary*。
+如果参数*src*是一个字节对象（`bytes` object）且开头为一个有效的（valid）—标准可移植中间件表示（SPIR-V）的神奇数字（magic number），就会被鸳鸯传递到 OpenCL 实现，而不是作为 OpenCL C 代码（SPIR-V 要求 OpenCL 2.1 版本以及更新的版本）。
 
 添加于版本 2016.2
 
@@ -25,9 +22,7 @@ code. (SPIR-V support requires OpenCL 2.1.)
 
 ##### 属性 info
 
-Lower case versions of the `program_info` constants
-may be used as attributes on instances of this class
-to directly query info attributes.
+常量 `program_info`  的小写版本，可以用作该类（class）实例（instances）的实例（instances）的属性（attributes），可以直接查询 'info' 属性。
 
 ##### 方法 get_info(param)
 
