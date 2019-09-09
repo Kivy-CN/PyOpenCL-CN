@@ -192,38 +192,30 @@ ev = cl.enqueue_nd_range_kernel(queue, sum_knl, a_np.shape, None)
 还有一个解决方案涉及到隐式锁（implicit locks），详细内容参考邮件列表： [October 2012](http://lists.tiker.net/pipermail/pyopencl/2012-October/001311.html)。
 
 添加于版本 0.92
-*local_size* was promoted to third positional argument from being a
-keyword argument. The old keyword argument usage will continue to
-be accepted with a warning throughout the 0.92 release cycle.
-This is a backward-compatible change (just barely!) because
-*local_size* as third positional argument can only be a
-`tuple`或者 *None*. `tuple` instances are never valid
-`Kernel` arguments, and *None* is valid as an argument, but
-its treatment in the wrapper had a bug (now fixed) that prevented
-it from working.
+
+局部规模 *local_size* 从一个关键词参数（keyword argument）提升到了第三个位置参数（third positional argument）。旧的关键词参数继续呗接受，只是在 0.92 版本的循环（cycle）中会产生一个警告信息。
+这是一个向后兼容的更改，因为局部规模 *local_size* 作为第三位置参数只可以是一个元组`tuple`或者为空*None*。元组 `tuple` 实例不能是有效的核参数（`Kernel` arguments）, 而空 *None* 作为一个参数有效，但封装器对其的接收存在一个 bug 不能正常工作（据说现在已经修复）。
 
 添加于版本 2011.1
-Added the *g_times_l* keyword arg.
+增加了关键词参数 *g_times_l* 。
 
 ##### 方法 capture_call(filename, queue, global_size, local_size, *args, global_offset=None, wait_for=None, g_times_l=False)
 
-This method supports the exact same interface as 方法 `__call__`, but
-instead of invoking the kernel, it writes a self-contained PyOpenCL program
-to *filename* that reproduces this invocation. Data and kernel source code
-will be packaged up in *filename*'s source code.
+该方法支持与方法 `__call__` 相同的接口，但该方法并不调用核，而是将一个自身包含的（self-contained） PyOpenCL 程序写入到文件名 *filename* 重新生成这次调用。数据和核代码都将打包在文件名 *filename* 的源代码中。
 
-This is mainly intended as a debugging aid. For example, it can be used
-to automate the task of creating a small, self-contained test case for
-an observed problem. It can also help separate a misbehaving kernel from
-a potentially large或者 time-consuming outer code.
+这个设计主要是为了调试方便。比如可以用来创建一系列的自动任务来创建一些小的、自包含的测试情景，来检查观测到的问题。也可以用来将出现异常行为的核从一个可能很大或者很耗时的外部代码中隔绝出来。
 
-To use, simply change：
+使用方法如下所示：
 
+```Python
 evt = my_kernel(queue, gsize, lsize, arg1, arg2, ...)
+```
 
-to：
+或者：
 
+```Python
 evt = my_kernel.capture_call("bug.py", queue, gsize, lsize, arg1, arg2, ...)
+```
 
 添加于版本 2013.1
 
@@ -234,25 +226,22 @@ evt = my_kernel.capture_call("bug.py", queue, gsize, lsize, arg1, arg2, ...)
 
 #### class LocalMemory(size)
 
-A helper class to pass `__local` memory arguments to kernels.
+一个援助类，将 局部内存参数（ `__local` memory arguments）传递给核（kernels）。
 
 添加于版本 0.91.2
 
 ##### 属性 size
 
-The size of local buffer in bytes to be provided.
+局部缓存的字节规模。
 
-函数 enqueue_nd_range_kernel(queue, kernel, global_work_size, local_work_size, global_work_offset=None, wait_for=None, g_times_l=False)
+###### 函数 enqueue_nd_range_kernel(queue, kernel, global_work_size, local_work_size, global_work_offset=None, wait_for=None, g_times_l=False)
 
 |std-enqueue-blurb|
 
-If *g_times_l* is specified, the global size will be multiplied by the
-local size. (which makes the behavior more like Nvidia CUDA) In this case,
-*global_size* and *local_size* also do not have to have the same number
-of dimensions.
+如果已经指定了参数 *g_times_l* ，全局规模（global size）就是这个值乘以局部规模（local size），类似 NVIDIA 的 CUDA。这种情况下，全局规模 *global_size* 核局部规模 *local_size* 就不必须有同样的维度数。
 
 添加于版本 2011.1
-Added the *g_times_l* keyword arg.
+增加关键词参数 *g_times_l*。
 
 函数 enqueue_task(queue, kernel, wait_for=None)
 
