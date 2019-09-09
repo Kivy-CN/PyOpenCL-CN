@@ -183,21 +183,13 @@ ev = cl.enqueue_nd_range_kernel(queue, sum_knl, a_np.shape, None)
 
 *None* 可以传递给局部规模（local_size)。
 
-如果指定了 *g_times_l* ，全局规模就是用这个值乘以局部规模（local size），这个特性和 NVIDIA 的 CUDA 相似。这种情况下，全局规模 *global_size* 和 局部规模 *local_size* 也不必须有同样的维度数(number
-of dimensions)。
+如果指定了 *g_times_l* ，全局规模就是用这个值乘以局部规模（local size），这个特性和 NVIDIA 的 CUDA 相似。这种情况下，全局规模 *global_size* 和 局部规模 *local_size* 也不必须有同样的维度数(number of dimensions)。
 
 ###### 注意 
 
-方法 `__call__` is *not* thread-safe. It sets the arguments using 方法 `set_args`
-and then runs 函数 `enqueue_nd_range_kernel`. Another thread could race it
-in doing the same things, with undefined outcome. This issue is inherited
-from the C-level OpenCL API. The recommended solution is to make a kernel
-(i.e. access `prg.kernel_name`, which corresponds to making a new kernel)
-for every thread that may enqueue calls to the kernel.
+方法 `__call__` *并不是* 线程安全(thread-safe)的。该方法使用方法 `set_args`来设置参数（argument）然后运行函数 `enqueue_nd_range_kernel`。如果另外一个线程也有同样操作就会与之发生竞争，就会形成不确定的输出。这个问题是来自于 C 语言层面的 OpenCL API。推荐的解决方法是对每个可能提交核调用队列的线程（every thread that may enqueue calls to the kernel）建立一个核（比如，获取 `prg.kernel_name`，对应的就会创建一个新核）。
 
-A solution involving implicit locks was discussed and decided against on the
-mailing list in `October 2012
-<http://lists.tiker.net/pipermail/pyopencl/2012-October/001311.html>`_.
+还有一个解决方案涉及到隐式锁（implicit locks），详细内容参考邮件列表： [October 2012](http://lists.tiker.net/pipermail/pyopencl/2012-October/001311.html)。
 
 添加于版本 0.92
 *local_size* was promoted to third positional argument from being a
