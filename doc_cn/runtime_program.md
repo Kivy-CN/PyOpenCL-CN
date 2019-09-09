@@ -92,8 +92,8 @@ ev = cl.enqueue_nd_range_kernel(queue, sum_knl, a_np.shape, None)
 
 将程序（`Program`）中的所有核对象（`Kernel` objects）以一个列表的形式返回。
 
-.. automethod:: from_int_ptr
-.. autoattribute:: int_ptr
+.. automethod： from_int_ptr
+.. autoattribute： int_ptr
 
 |comparable|
 
@@ -157,54 +157,39 @@ ev = cl.enqueue_nd_range_kernel(queue, sum_knl, a_np.shape, None)
 
 ##### 方法 set_args(self, *args)
 
-Invoke 方法 `set_arg` on each element of *args* in turn.
+对 *args* 中的每个元素按照顺序依次调用方法 `set_arg`。
 
 添加于版本 0.92
 
 ##### 方法 set_scalar_arg_dtypes(arg_dtypes)
 
-Inform the wrapper about the sized types of scalar
-`Kernel` arguments. For each argument,
-*arg_dtypes* contains an entry. For non-scalars,
-this must be *None*. For scalars, it must be an
-object acceptable to the `numpy.dtype`
-constructor, indicating that the corresponding
-scalar argument is of that type.
+将核参数（`Kernel` arguments）的标量的符号类型（sized types）告知程序封装（wrapper）。*arg_dtypes* 针对每个参数（argument）都有一个对应项（entry）。对于非标量（non-scalar），这就必须为空（*None*）。对于标量，就必须是一个对象，该对象需要能够被 `numpy.dtype` 构造器（constructor）所接收，也就意味着对应的标量参数是该类型的。
 
-After invoking this function with the proper information,
-most suitable number types will automatically be
-cast to the right type for kernel invocation.
+在搭配适当信息调用该函数后，大多数适合的数据类型都会自动传递成为核调用中的正确类型。
 
 ###### 注意 
 
-The information set by this rountine is attached to a single kernel
-instance. A new kernel instance is created every time you use
-`program.kernel` attribute access. The following will therefore not
-work::
+上面方法所设置的信息是附加到某一单独核实例（a single kernel instance）的。而每次你使用`program.kernel` 进行属性读取的时候就会建立一个新的核实例。所以下面的代码就是不能正常工作的：
 
+```Python
  prg = cl.Program(...).build()
  prg.kernel.set_scalar_arg_dtypes(...)
  prg.kernel(queue, n_globals, None, args)
-
+```
 
 ##### 方法 __call__(queue, global_size, local_size, *args, global_offset=None, wait_for=None, g_times_l=False)
 
-Use :func:`enqueue_nd_range_kernel` to enqueue a kernel execution, after using
-方法 `set_args` to set each argument in turn. 查看 the documentation for
-方法 `set_arg` to 查看 what argument types are allowed.
-|std-enqueue-blurb|
+使用 函数 `enqueue_nd_range_kernel` 来讲一个核执行（kernel execution）提交队列（enqueue），这之前要使用方法 `set_args` 来依次设置每个参数（argument）。查看文档中关于方法 `set_arg` 的内容来了解允许的参数类型（argument types）有哪些。
 
-*None* may be passed for local_size.
+*None* 可以传递给局部规模（local_size)。
 
-If *g_times_l* is specified, the global size will be multiplied by the
-local size. (which makes the behavior more like Nvidia CUDA) In this case,
-*global_size* and *local_size* also do not have to have the same number
-of dimensions.
+如果指定了 *g_times_l* ，全局规模就是用这个值乘以局部规模（local size），这个特性和 NVIDIA 的 CUDA 相似。这种情况下，全局规模 *global_size* 和 局部规模 *local_size* 也不必须有同样的维度数(number
+of dimensions)。
 
 ###### 注意 
 
 方法 `__call__` is *not* thread-safe. It sets the arguments using 方法 `set_args`
-and then runs :func:`enqueue_nd_range_kernel`. Another thread could race it
+and then runs 函数 `enqueue_nd_range_kernel`. Another thread could race it
 in doing the same things, with undefined outcome. This issue is inherited
 from the C-level OpenCL API. The recommended solution is to make a kernel
 (i.e. access `prg.kernel_name`, which corresponds to making a new kernel)
@@ -240,18 +225,18 @@ to automate the task of creating a small, self-contained test case for
 an observed problem. It can also help separate a misbehaving kernel from
 a potentially large或者 time-consuming outer code.
 
-To use, simply change::
+To use, simply change：
 
 evt = my_kernel(queue, gsize, lsize, arg1, arg2, ...)
 
-to::
+to：
 
 evt = my_kernel.capture_call("bug.py", queue, gsize, lsize, arg1, arg2, ...)
 
 添加于版本 2013.1
 
-.. automethod:: from_int_ptr
-.. autoattribute:: int_ptr
+.. automethod： from_int_ptr
+.. autoattribute： int_ptr
 
 |comparable|
 
